@@ -32,7 +32,7 @@ speaker_wavs = {speaker: list(map(preprocess_wav, wav_fpaths)) for speaker, wav_
                         lambda wav_fpath: wav_fpath.parent.stem)}
 
 
-## Similarity between two utterances from each speaker
+## ---------- Similarity between two utterances from each speaker
 # Embed two utterances A and B for each speaker
 embeds_a = np.array([encoder.embed_utterance(wavs[0]) for wavs in speaker_wavs.values()])
 embeds_b = np.array([encoder.embed_utterance(wavs[1]) for wavs in speaker_wavs.values()])
@@ -54,7 +54,7 @@ for i in range(len(embeds_a)):
 assert np.allclose(utt_sim_matrix, utt_sim_matrix2)
 
 
-## Similarity between two speaker embeddings
+## ---------- Similarity between two speaker embeddings
 # Divide the utterances of each speaker in groups of identical size and embed each group as a
 # speaker embedding
 spk_embeds_a = np.array([encoder.embed_speaker(wavs[:len(wavs) // 2]) \
@@ -80,3 +80,4 @@ plot_histograms((spk_sim_matrix[mask], spk_sim_matrix[np.logical_not(mask)]), ax
                 ["Same speaker", "Different speakers"], 
                 "Normalized histogram of similarity\nvalues between speakers")
 plt.show()
+print('Done')
